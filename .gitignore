@@ -1,5 +1,6 @@
 # secrets: never commit watermark keys
 *.key
+!keys/demo-master.key
 master.key
 .env
 

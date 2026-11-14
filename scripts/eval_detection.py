@@ -1,13 +1,12 @@
 """Generate story + code with and without the watermark, then detect and attribute.
 
-Needs scripts/start_server.sh running. Uses the master key at ~/.config/ripple-fingerprint/master.key
-(create it with demo.py, or restore your saved key there).
+Needs scripts/start_server.sh running. Uses keys/demo-master.key (or $RIPPLE_KEY).
 """
 import sys, time, numpy as np
 import os; sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from ripple_fingerprint import ModelRegistry
 from ripple_fingerprint.llamacpp import LlamaServer, generate_ids, detect_text
-key = bytes.fromhex(open('/root/.config/ripple-fingerprint/master.key').read().strip())
+key = bytes.fromhex(open(os.environ.get('RIPPLE_KEY', os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'keys', 'demo-master.key'))).read().strip())
 srv = LlamaServer(); reg = ModelRegistry(key)
 wm = reg.register('ripple-65b-preview', encode=srv.tokenize); reg.register('decoy-model', encode=srv.tokenize)
 PROMPTS = {"story": "Write an imaginative short story (about 300 words) about a lighthouse keeper who finds a strange object on the beach.",

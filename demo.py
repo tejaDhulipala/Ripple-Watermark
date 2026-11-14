@@ -15,7 +15,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from ripple_fingerprint import ModelRegistry  # noqa: E402
 from ripple_fingerprint.llamacpp import LlamaServer, detect_text, generate_ids  # noqa: E402
 
-KEY_PATH = os.path.expanduser("~/.config/ripple-fingerprint/master.key")
+# Demo key, committed on purpose (public = anyone can detect/forge this watermark).
+# Override with RIPPLE_KEY=/path/to/other.key for a private key.
+KEY_PATH = os.environ.get("RIPPLE_KEY", os.path.join(os.path.dirname(os.path.abspath(__file__)), "keys", "demo-master.key"))
 LABEL = "ripple-65b-preview"
 
 

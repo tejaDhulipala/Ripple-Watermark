@@ -32,16 +32,16 @@ bash scripts/setup_pod.sh                  # ~42 GB disk; model download is resu
 nohup scripts/start_server.sh > /root/llama-server.log 2>&1 &
 curl -s --retry 60 --retry-delay 2 --retry-all-errors http://127.0.0.1:8080/health
 
-# Restore YOUR saved master key (it is NOT in git, on purpose):
-mkdir -p ~/.config/ripple-fingerprint && chmod 700 ~/.config/ripple-fingerprint
-echo '<64 hex chars>' > ~/.config/ripple-fingerprint/master.key && chmod 600 ~/.config/ripple-fingerprint/master.key
-
 python3 scripts/eval_detection.py          # ~1.5 min
 ```
 
-If the key file is missing, `demo.py` creates a new random one, but text watermarked with the
-old key can then no longer be detected. **Back the key up outside the pod.** It must never be
-committed: anyone with it can detect the watermark or forge it. `.gitignore` blocks `*.key`.
+### The key
+
+The master key is committed at `keys/demo-master.key` **on purpose, because this is a demo.**
+Anyone with the key can detect the watermark *and forge it*, so a public key gives no real
+protection. For real use, generate a private key, keep it out of git (`.gitignore` blocks other
+`*.key` files), and point the scripts at it with `RIPPLE_KEY=/path/to/private.key`. Text
+watermarked under one key is only detectable with that same key.
 
 ### Environment it was built on
 
