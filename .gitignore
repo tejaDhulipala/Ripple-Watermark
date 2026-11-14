@@ -1,0 +1,14 @@
+# secrets: never commit watermark keys
+*.key
+master.key
+.env
+
+# python / jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.cache/
+
+# model weights / build output
+*.gguf
+*.safetensors
